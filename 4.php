@@ -6,9 +6,13 @@ for  ($i = 100; $i < 1000; ++$i) {
 		$p = $i * $j;
 
 		if ($p == strrev($p)) {
-			$max = max($max, $p);
+			if ($p > $max) {
+				$max = $p;
+				$I = $i;
+				$J = $j;
+			}
 		}
 	}
 }
-echo "$p\n";
+echo "$max $I $J\n";
 
