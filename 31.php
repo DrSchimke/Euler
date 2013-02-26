@@ -1,25 +1,19 @@
 <?php
-$coins = array(200, 100, 50, 20, 10, 5, 2, 1);
-
-function test($coins, $limit, $noCoin, $already)
+function coin_sum($coins, $limit)
 {
 	$count = 0;
-	foreach ($coins as $coin) {
-		if (in_array($coin, $noCoin)) continue;
-		$noCoin[] = $coin;
-		for ($value = $coin, $i = 1; $value <= $limit; $value += $coin, ++$i) {
+	while ($coin = array_shift($coins)) {
+		for ($value = $coin; $value <= $limit; $value += $coin) {
+
 			if ($limit == $value) {
-				echo "$already + $i x $coin\n";
 				++$count;
 			}
 
-			if ($limit > $value) {
-				$count += test($coins, $limit - $value, $noCoin, "$already + $i x $coin");
-			}
+			$count += coin_sum($coins, $limit - $value);
 		}
 	}
 	return $count;
 }
 
-echo test($coins, 200, array(), "") . "\n";
+echo coin_sum(array(200, 100, 50, 20, 10, 5, 2, 1), 200);
 
